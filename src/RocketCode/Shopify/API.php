@@ -275,6 +275,7 @@ class API
 	    }
 
         curl_setopt_array($ch, $options);
+		curl_setopt($conn, CURLOPT_FAILONERROR, false);
 
         $response = curl_exec($ch);
         $headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
