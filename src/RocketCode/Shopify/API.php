@@ -276,7 +276,7 @@ class API
 
         curl_setopt_array($ch, $options);
 		curl_setopt($ch, CURLOPT_FAILONERROR, false);
-		curl_setopt($ch, CURLOPT_HTTP200ALIASES, array(400));
+		//curl_setopt($ch, CURLOPT_HTTP200ALIASES, array(400));
 
         $response = curl_exec($ch);
         $headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
