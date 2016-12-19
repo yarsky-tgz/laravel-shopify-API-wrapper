@@ -284,7 +284,9 @@ class API
 
         // Data returned
         $result = json_decode(substr($response, $headerSize), $request['RETURNARRAY']);
-
+		if (function_exists('debug')) {
+			debug($result);
+		}
         // Headers
         $info = array_filter(array_map('trim', explode("\n", substr($response, 0, $headerSize))));
 
@@ -308,9 +310,6 @@ class API
 
 	    if ($_ERROR['NUMBER'])
 	    {
-			if (function_exists('debug')) {
-				debug($result, $response);
-			}
 		    throw new \Exception('ERROR #' . $_ERROR['NUMBER'] . ': ' . $_ERROR['MESSAGE']);
 	    }
 
