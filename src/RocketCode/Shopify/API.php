@@ -307,7 +307,7 @@ class API
 	    if ($_ERROR['NUMBER'])
 	    {
 			if (function_exists('debug')) {
-				debug($result);
+				debug($result, $response);
 			}
 		    throw new \Exception('ERROR #' . $_ERROR['NUMBER'] . ': ' . $_ERROR['MESSAGE']);
 	    }
