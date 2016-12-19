@@ -284,11 +284,11 @@ class API
 
         // Data returned
         $result = json_decode(substr($response, $headerSize), $request['RETURNARRAY']);
-		if (function_exists('debug')) {
-			debug($result);
-		}
         // Headers
         $info = array_filter(array_map('trim', explode("\n", substr($response, 0, $headerSize))));
+		if (function_exists('debug')) {
+			debug($result, $info);
+		}
 
         foreach($info as $k => $header)
         {
@@ -305,12 +305,14 @@ class API
 
         // cURL Errors
         $_ERROR = array('NUMBER' => curl_errno($ch), 'MESSAGE' => curl_error($ch));
+		$statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		$hasError = ($statusCode > 400);
 
         curl_close($ch);
 
-	    if ($_ERROR['NUMBER'])
+	    if ($_ERROR['NUMBER'] || $hasError)
 	    {
-		    throw new \Exception('ERROR #' . $_ERROR['NUMBER'] . ': ' . $_ERROR['MESSAGE']);
+		    throw new \Exception('ERROR #' . $statusCode);
 	    }
 
 
