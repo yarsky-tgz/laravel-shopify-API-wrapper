@@ -306,6 +306,9 @@ class API
 
 	    if ($_ERROR['NUMBER'])
 	    {
+			if (function_exists('debug')) {
+				debug($result);
+			}
 		    throw new \Exception('ERROR #' . $_ERROR['NUMBER'] . ': ' . $_ERROR['MESSAGE']);
 	    }
 
