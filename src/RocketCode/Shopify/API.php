@@ -247,7 +247,7 @@ class API
             CURLOPT_CUSTOMREQUEST   => strtoupper($request['METHOD']),
             CURLOPT_ENCODING        => '',
             CURLOPT_USERAGENT       => 'RocketCode Shopify API Wrapper',
-            CURLOPT_FAILONERROR     => $request['FAILONERROR'],
+            //CURLOPT_FAILONERROR     => $request['FAILONERROR'],
             CURLOPT_VERBOSE         => $request['ALLDATA'],
             CURLOPT_HEADER          => 1
         );
@@ -276,19 +276,14 @@ class API
 
         curl_setopt_array($ch, $options);
 		curl_setopt($ch, CURLOPT_FAILONERROR, false);
-		//curl_setopt($ch, CURLOPT_HTTP200ALIASES, array(400));
 
         $response = curl_exec($ch);
         $headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
-
 
         // Data returned
         $result = json_decode(substr($response, $headerSize), $request['RETURNARRAY']);
         // Headers
         $info = array_filter(array_map('trim', explode("\n", substr($response, 0, $headerSize))));
-		if (function_exists('debug')) {
-			debug($result, $info);
-		}
 
         foreach($info as $k => $header)
         {
@@ -302,17 +297,15 @@ class API
             $_INFO[trim($key)] = trim($val);
         }
 
-
         // cURL Errors
         $_ERROR = array('NUMBER' => curl_errno($ch), 'MESSAGE' => curl_error($ch));
 		$statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 		$hasError = ($statusCode > 400);
-
         curl_close($ch);
 
 	    if ($_ERROR['NUMBER'] || $hasError)
 	    {
-		    throw new \Exception('ERROR #' . $statusCode);
+		    throw new ShopifyException($result);
 	    }
 
 
