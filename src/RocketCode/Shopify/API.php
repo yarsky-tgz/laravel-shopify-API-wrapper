@@ -302,6 +302,7 @@ class API
 		$statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 		$hasError = ($statusCode > 400);
         curl_close($ch);
+		echo $statusCode . "\n";
 
 	    if ($_ERROR['NUMBER'] || $hasError)
 	    {
