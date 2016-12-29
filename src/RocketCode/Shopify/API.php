@@ -300,9 +300,8 @@ class API
         // cURL Errors
         $_ERROR = array('NUMBER' => curl_errno($ch), 'MESSAGE' => curl_error($ch));
 		$statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-		$hasError = ($statusCode > 400);
+		$hasError = ($statusCode >= 400);
         curl_close($ch);
-		echo $statusCode . "\n";
 
 	    if ($_ERROR['NUMBER'] || $hasError)
 	    {
