@@ -305,7 +305,7 @@ class API
 
 	    if ($_ERROR['NUMBER'] || $hasError)
 	    {
-		    throw new ShopifyException($result);
+		    throw new ShopifyException($result, $request);
 	    }
 
 
